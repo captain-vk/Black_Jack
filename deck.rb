@@ -3,9 +3,6 @@
 require_relative 'card'
 
 class Deck
-  LEARS = %w[♠ ♥ ♦ ♣].freeze
-  CARD_NAMES = %w[2 3 4 5 6 7 8 9 10 Jack Queen King Ace].freeze
-  VALUES = [2, 3, 4, 5, 6, 7, 8, 9, 10, 10, 10, 10, 11].freeze
 
   attr_accessor :cards
 
@@ -18,12 +15,12 @@ class Deck
     @cards.shuffle!
   end
 
-  private
+  # private
 
   def create_deck
-    LEARS.each do |lear|
-      CARD_NAMES.each_with_index do |name, index|
-        @cards << Card.new(name, lear, VALUES[index])
+    Card::LEARS.each do |lear|
+      Card::NAMES.each_with_index do |name, index|
+        @cards << Card.new(name, lear, Card::VALUES[index])
       end
     end
   end
