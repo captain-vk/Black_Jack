@@ -1,28 +1,28 @@
-require_relative 'deck'
+# frozen_string_literal: true
 
-class Player
+require_relative 'card'
+
+class Dealer
   attr_reader :current_cards, :score
   attr_accessor :money, :name
 
-  def initialize(name)
-    @name = name
+  def initialize(name = 'dealer')
     @money = 100
     @current_cards = []
-    @score = 0    
+    @score = 0
+    @name = name
   end
 
-  def start
+  def bet!
     @money -= 10
   end
 
   def count_score
     @score = 0
     @current_cards.each do |card|
-    @score += card.value
+      @score += card.value
     end
-    if ace and @score > 21
-      @score -= 10
-    end
+    aces.times { @score -= 10 if score > 21 }
     @score
   end
 
@@ -33,11 +33,12 @@ class Player
   end
 
   def take_card(deck)
-    current_cards << deck.cards[0]
-    deck.cards.delete_at(0)    
+    current_cards << deck.cards.delete_at(0)
   end
 
-  def ace
-    @current_cards.each { |card| card.name == 'Ace' }
+  private
+
+  def aces
+    @current_cards.count { |card| card.name == 'Ace' }
   end
 end

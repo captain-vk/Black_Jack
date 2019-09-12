@@ -1,12 +1,11 @@
+# frozen_string_literal: true
+
 class Card
+  attr_reader :name, :lear, :value
 
-  attr_reader :name, :suit, :value
-
-  def initialize(name, suit, value)
+  def initialize(name, lear, value)
     @name = name
-    @suit = suit
+    @lear = lear
     @value = value
   end
-
-
 end

@@ -1,7 +1,9 @@
+# frozen_string_literal: true
+
 require_relative 'card'
 
 class Deck
-  SUITES = %w[♠ ♥ ♦ ♣].freeze
+  LEARS = %w[♠ ♥ ♦ ♣].freeze
   CARD_NAMES = %w[2 3 4 5 6 7 8 9 10 Jack Queen King Ace].freeze
   VALUES = [2, 3, 4, 5, 6, 7, 8, 9, 10, 10, 10, 10, 11].freeze
 
@@ -19,9 +21,9 @@ class Deck
   private
 
   def create_deck
-    SUITES.each do |suit|
+    LEARS.each do |lear|
       CARD_NAMES.each_with_index do |name, index|
-        @cards << Card.new(name, suit, VALUES[index])
+        @cards << Card.new(name, lear, VALUES[index])
       end
     end
   end
