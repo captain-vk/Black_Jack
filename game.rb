@@ -29,6 +29,8 @@ class Game
     @deck.cards.shuffle!
     @gamer.bet!
     @dealer.bet!
+    @gamer.current_cards.clear
+    @dealer.current_cards.clear
     @gamer.card_distribution(@deck)
     @dealer.card_distribution(@deck)
   end
