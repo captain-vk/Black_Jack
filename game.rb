@@ -59,9 +59,8 @@ class Game
   end
 
   def dealers_turn
-    return reavel_cards if @dealer.count_score >= 17
-
-    dealer_extra if dealer_can_extra? && @gamer.count_score < 22
+    reavel_cards if @dealer.count_score >= 17
+    dealer_extra if @dealer.count_score < 17 && dealer_can_extra?
   end
 
   def reavel_cards
