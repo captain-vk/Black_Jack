@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 require_relative 'card'
-# require_relative 'hand'
 
 class Dealer
   attr_reader :current_cards, :score
@@ -20,7 +19,7 @@ class Dealer
 
   def count_score
     @score = 0
-    @current_cards.map do |card|
+    @current_cards.each do |card|
       @score += card.cost_card
     end
     aces.times { @score -= 10 if score > 21 }

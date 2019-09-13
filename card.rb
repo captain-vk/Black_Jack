@@ -14,6 +14,6 @@ class Card
   end
 
   def cost_card
-    self.value
+    value
   end
 end

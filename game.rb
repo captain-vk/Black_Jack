@@ -1,22 +1,19 @@
 # frozen_string_literal: true
 
 require_relative 'interface'
-require_relative 'gamer'
 require_relative 'dealer'
 require_relative 'deck'
 require_relative 'hand'
-
 
 class Game
   attr_reader :gamer, :dealer, :deck, :interface
 
   ACTIONS_MENU = { '1': 'dealers_turn', '2': 'extra_card', '3': 'reavel_cards' }.freeze
 
-  def initialize(name = interface.enter_name)
-    @interface = Interface.new
-    @gamer = Gamer.new(name)
-    @dealer = Dealer.new
-    @hand = Hand.new
+  def initialize(interface, dealer)
+    @interface = interface
+    @gamer =  Hand.new(interface.enter_name)
+    @dealer = dealer
     start_game
   end
 
@@ -79,13 +76,13 @@ class Game
 
   def calc_results
     case winner
-    when @hand.gamer
+    when @gamer
       @gamer.money += 20
       @interface.gamer_won
-    when @hand.dealer
+    when @dealer
       @dealer.money += 20
       @interface.dealer_won
-    when @hand.draw
+    when 'draw'
       @gamer.money += 10
       @dealer.money += 10
       @interface.draw
@@ -94,7 +91,12 @@ class Game
   end
 
   def winner
-@hand
+    return @dealer if @gamer.count_score > 21
+    return @gamer if @dealer.score > 21
+    return @gamer if @gamer.count_score > @dealer.score && @gamer.count_score <= 21
+    return @dealer if @dealer.score > @gamer.count_score && @dealer.score <= 21
+
+    'draw' if @dealer.score == @gamer.count_score
   end
 
   def play_again?
@@ -106,5 +108,5 @@ class Game
   end
 end
 
-game = Game.new
+game = Game.new(Interface.new, Dealer.new)
 game

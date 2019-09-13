@@ -1,20 +1,44 @@
 # frozen_string_literal: true
 
-require_relative 'interface'
-require_relative 'gamer'
-require_relative 'dealer'
-require_relative 'deck'
-require_relative 'hand'
+require_relative 'card'
 
 class Hand
+  attr_reader :current_cards, :score, :dealer, :gamer, :draw
+  attr_accessor :money, :name
 
-  attr_reader :dealer, :gamer, :draw
+  def initialize(name = 'gamer')
+    @money = 100
+    @current_cards = []
+    @score = 0
+    @name = name
+  end
 
-    dealer if @gamer.score > 21
-    gamer if @dealer.score > 21
-    gamer if @gamer.score > @dealer.score && @gamer.score <= 21
-    dealer if @dealer.score > @gamer.score && @dealer.score <= 2
+  def bet!
+    @money -= 10
+  end
 
-    draw if @dealer.score == @gamer.score
+  def count_score
+    @score = 0
+    @current_cards.each do |card|
+      @score += card.cost_card
+    end
+    aces.times { @score -= 10 if score > 21 }
+    @score
+  end
 
+  def card_distribution(deck)
+    2.times do
+      take_card(deck)
+    end
+  end
+
+  def take_card(deck)
+    current_cards << deck.cards.delete_at(0)
+  end
+
+  private
+
+  def aces
+    @current_cards.count { |card| card.name == 'Ace' }
+  end
 end

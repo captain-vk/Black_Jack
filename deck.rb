@@ -3,7 +3,6 @@
 require_relative 'card'
 
 class Deck
-
   attr_accessor :cards
 
   def initialize
