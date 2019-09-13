@@ -12,15 +12,16 @@ class Game
 
   def initialize(interface, dealer)
     @interface = interface
-    @gamer =  Hand.new(interface.enter_name)
+    @gamer =  Gamer.new(interface.enter_name)
     @dealer = dealer
+    @hand_gamer = Hand.new
     start_game
   end
 
   def start_game
     @deck = Deck.new
     round
-    @interface.show_cards_score(@gamer)
+    @interface.show_cards_score(@hand_gamer)
     @interface.show_cards_hidden
     gamers_turn
   end
@@ -29,10 +30,12 @@ class Game
     @deck.cards.shuffle!
     @gamer.bet!
     @dealer.bet!
-    @gamer.current_cards.clear
+    @hand_gamer.current_cards.clear
     @dealer.current_cards.clear
-    @gamer.card_distribution(@deck)
-    @dealer.card_distribution(@deck)
+    @deck.get_card(dealer)
+    @deck.get_card(dealer)
+    @deck.get_card(@hand_gamer)
+    @deck.get_card(@hand_gamer)
   end
 
   def gamers_turn
@@ -43,7 +46,7 @@ class Game
   end
 
   def can_extra?
-    @gamer.current_cards.length < 3
+    @hand_gamer.current_cards.length < 3
   end
 
   def dealer_can_extra?
@@ -51,12 +54,12 @@ class Game
   end
 
   def extra_card
-    @gamer.take_card(@deck) if can_extra?
+    @deck.get_card(@hand_gamer) if can_extra?
     dealers_turn
   end
 
   def dealer_extra
-    @dealer.take_card(@deck)
+    @deck.get_card(dealer)
     reavel_cards
   end
 
@@ -67,7 +70,7 @@ class Game
 
   def reavel_cards
     @interface.show_player(@gamer)
-    @interface.show_cards_score(@gamer)
+    @interface.show_cards_score(@hand_gamer)
     @interface.show_player(@dealer)
     @interface.show_cards_score(@dealer)
     calc_results
@@ -91,12 +94,12 @@ class Game
   end
 
   def winner
-    return @dealer if @gamer.count_score > 21
+    return @dealer if @hand_gamer.count_score > 21
     return @gamer if @dealer.score > 21
-    return @gamer if @gamer.count_score > @dealer.score && @gamer.count_score <= 21
-    return @dealer if @dealer.score > @gamer.count_score && @dealer.score <= 21
+    return @gamer if @hand_gamer.count_score > @dealer.score && @hand_gamer.count_score <= 21
+    return @dealer if @dealer.score > @hand_gamer.count_score && @dealer.score <= 21
 
-    'draw' if @dealer.score == @gamer.count_score
+    'draw' if @dealer.score == @hand_gamer.count_score
   end
 
   def play_again?
