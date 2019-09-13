@@ -4,6 +4,7 @@ require_relative 'interface'
 require_relative 'dealer'
 require_relative 'deck'
 require_relative 'hand'
+require_relative 'gamer'
 
 class Game
   attr_reader :gamer, :dealer, :deck, :interface

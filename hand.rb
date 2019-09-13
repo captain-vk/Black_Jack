@@ -1,9 +1,5 @@
 # frozen_string_literal: true
 
-require_relative 'card'
-require_relative 'gamer'
-require_relative 'deck'
-
 class Hand
   attr_accessor :current_cards
 

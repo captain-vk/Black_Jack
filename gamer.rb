@@ -1,9 +1,5 @@
 # frozen_string_literal: true
 
-require_relative 'dealer'
-require_relative 'hand'
-require_relative 'deck'
-
 class Gamer
   attr_accessor :name, :money
 

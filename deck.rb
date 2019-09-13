@@ -1,13 +1,9 @@
 # frozen_string_literal: true
 
 require_relative 'card'
-require_relative 'hand'
-require_relative 'dealer'
-# require 'byebug'
 
 class Deck
   attr_accessor :cards
-  attr_reader :current_cards_dealer, :current_cards_gamer
 
   def initialize
     @cards = []
