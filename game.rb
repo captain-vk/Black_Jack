@@ -86,10 +86,10 @@ class Game
   end
 
   def winner
-    return @dealer if @gamer.hand.count_score > 21
-    return @gamer if @dealer.hand.count_score > 21
-    return @gamer if @gamer.hand.count_score > @dealer.hand.count_score && @gamer.hand.count_score <= 21
-    return @dealer if @dealer.hand.count_score > @gamer.hand.count_score && @dealer.hand.count_score <= 21
+    return @dealer if @gamer.hand.excess
+    return @gamer if @dealer.hand.excess
+    return @gamer if @gamer.hand.count_score > @dealer.hand.count_score && !@gamer.hand.excess
+    return @dealer if @dealer.hand.count_score > @gamer.hand.count_score && !@dealer.hand.excess
 
     'draw' if @dealer.hand.count_score == @gamer.hand.count_score
   end
