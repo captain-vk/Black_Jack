@@ -20,6 +20,10 @@ class Hand
     current_cards.length < 3
   end
 
+  def excess
+    @score > 21
+  end
+
   private
 
   def aces
