@@ -16,6 +16,10 @@ class Hand
     @score
   end
 
+  def can_extra?
+    current_cards.length < 3
+  end
+
   private
 
   def aces
